@@ -68,40 +68,42 @@ class App extends React.Component {
 
 
   render() {
-    return (
-      <div>
-        <h1>Log in to application </h1>
-        <form onSubmit={this.login}>
-          <div>
-            username:
-            <input
-            type="text"
-            value={this.state.username}
-            onChange={this.handleUsernameChange}
-            />
-          </div>
-          <div>
-            password:
-            <input
-            type="text"
-            value={this.state.password}
-            onChange={this.handlePasswordChange} 
-            />    
-          </div>     
-          <button type="submit">kirjaudu </button>
-        </form>
-      </div>
-    )
-    return (
-      <div>
-        <h2>blogs</h2>
-        {this.state.blogs.map(blog => 
-          <Blog key={blog._id} blog={blog}/>
-        )}
-      </div>
-    );
-        
-    
+    if (this.state.user === null) {
+      return (
+        <div>
+          <h1>Log in to application </h1>
+          <form onSubmit={this.login}>
+            <div>
+              username:
+              <input
+              type="text"
+              value={this.state.username}
+              onChange={this.handleUsernameChange}
+              />
+            </div>
+            <div>
+              password:
+              <input
+              type="text"
+              value={this.state.password}
+              onChange={this.handlePasswordChange} 
+              />    
+            </div>     
+            <button type="submit">kirjaudu </button>
+          </form>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <h2>blogs</h2>
+          <p> {this.state.user.name} logged in </p>
+          {this.state.blogs.map(blog => 
+            <Blog key={blog._id} blog={blog}/>
+          )}         
+        </div>
+      );      
+    }   
   }
 }
 
