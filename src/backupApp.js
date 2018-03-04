@@ -3,8 +3,6 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import { ToastContainer, toast } from 'react-toastify'
-import Togglable from './components/Togglable'
-import CreateBlog from './components/CreateBlog'
 
 
 class App extends React.Component {
@@ -108,7 +106,7 @@ class App extends React.Component {
     this.setState({ username: event.target.value })
   }
   handleUrlChange = (event) => {
-    this.setState({ newUrl: event.target.value})
+    this.setState({ url: event.target.value})
   }
 
   toggleVisible = () => {
@@ -120,23 +118,12 @@ class App extends React.Component {
     } else if (event.target.name === 'username') {
       this.setState({ username: event.target.value })
     }
-  } 
- 
+  }
+
+  
+
 
   render() {
-    const createBlog = () => (
-      <Togglable buttonLabel="New blog">
-        <CreateBlog
-          handleSubmit={this.addBlog}
-          handleBlogChange={this.handleBlogChange}
-          handleAuthorChange={this.handleAuthorChange}
-          handleUrlChange={this.handleUrlChange}
-          newBlog={this.newBlog}
-          newAuthor={this.newAuthor}
-          newUrl={this.newUrl}
-        />
-      </Togglable> 
-    )
     if (this.state.user === null) {
       return (
         <div>
@@ -172,9 +159,33 @@ class App extends React.Component {
           {this.state.blogs.map(blog => 
             <Blog key={blog._id} blog={blog}/>
           )} 
-         {createBlog()}
-    
-          <ToastContainer />       
+          <h2> New blog: </h2>
+          
+          <form onSubmit={this.addBlog}>           
+            <div>
+              title:
+              <input
+                value={this.state.newBlog}
+                onChange={this.handleBlogChange}
+              />
+            </div>
+            <div>
+              author:             
+              <input 
+              value={this.state.newAuthor}
+              onChange={this.handleAuthorChange}
+              />
+            </div>
+            <div>
+              url: 
+              <input
+              value={this.state.newUrl}
+              onChange={this.handleUrlChange}
+              />
+            </div>
+            <button type ="submit">save</button>
+            <ToastContainer />
+          </form>        
         </div>
       );      
     }   
